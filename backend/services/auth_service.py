@@ -1,5 +1,5 @@
 from datetime import datetime
-
+from utils.id_generator import generate_user_id
 from database.connection import get_collection
 from utils.security import hash_password
 
@@ -16,11 +16,14 @@ class AuthService:
     @staticmethod  
     def login(user):
 
-        existing = users.find_one({
-            "email": user.email
-        })
+        existing = users.find_one(
+            {
+                "email": user.email
+            }
+        )
 
-        if not existing:
+
+        if existing is None:
             return False, "Invalid Email"
 
         if not verify_password(
@@ -31,19 +34,31 @@ class AuthService:
 
         token = create_access_token(
             {
+                "user_id": existing["user_id"],
                 "email": existing["email"],
                 "role": existing["role"]
             }
         )
 
         return True, {
-            "token": token,
-            "user": {
+
+            "access_token": token,
+
+            "token_type": "Bearer",
+
+            "user":{
+
+                "user_id": existing["user_id"],
+
                 "full_name": existing["full_name"],
+
                 "email": existing["email"],
+
                 "role": existing["role"]
+
             }
-        } 
+
+        }
     
     def register(user):
 

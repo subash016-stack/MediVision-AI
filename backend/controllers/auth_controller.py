@@ -13,6 +13,7 @@ class AuthController:
         success, result = AuthService.login(user)
 
         if not success:
+
             return ApiResponse.error(
                 result,
                 401
@@ -22,7 +23,7 @@ class AuthController:
             "Login Successful",
             result
         )
-    
+        
     def register(user):
 
         success, message = AuthService.register(user)

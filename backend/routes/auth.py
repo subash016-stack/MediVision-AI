@@ -6,6 +6,10 @@ from controllers.auth_controller import AuthController
 
 from schemas.user import UserLogin
 
+from middleware.auth_middleware import get_current_user
+
+from fastapi import Depends
+
 router = APIRouter(
 
     prefix="/auth",
@@ -34,3 +38,10 @@ def login(user: UserLogin):
 def register(user: UserRegister):
 
     return AuthController.register(user)
+
+@router.get("/me")
+def current_user(user=Depends(get_current_user)):
+    return {
+        "success": True,
+        "user": user
+    }
