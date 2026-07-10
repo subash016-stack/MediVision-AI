@@ -2,6 +2,7 @@ from fastapi import FastAPI
 
 from routes.auth import router as auth_router
 
+from routes.patient import router as patient_router
 
 app = FastAPI(
 
@@ -13,6 +14,8 @@ app = FastAPI(
 
 
 app.include_router(auth_router)
+
+app.include_router(patient_router)
 
 
 @app.get("/")
