@@ -10,3 +10,7 @@ DATABASE_NAME = os.getenv("DATABASE_NAME")
 client = MongoClient(MONGODB_URI)
 
 db = client[DATABASE_NAME]
+
+
+def get_collection(name: str):
+    return db[name]

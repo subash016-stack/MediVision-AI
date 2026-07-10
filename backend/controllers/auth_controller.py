@@ -1,23 +1,46 @@
 from fastapi import status
 
 from services.auth_service import AuthService
-from utils.response import success, error
+
+from utils.response import ApiResponse
 
 
 class AuthController:
 
     @staticmethod
-    def register(user):
+    def login(user):
 
-        ok, message = AuthService.register(user)
+        success, result = AuthService.login(user)
 
-        if not ok:
-            return error(
-                message,
-                status.HTTP_409_CONFLICT
+        if not success:
+            return ApiResponse.error(
+                result,
+                401
             )
 
-        return success(
+        return ApiResponse.success(
+            "Login Successful",
+            result
+        )
+    
+    def register(user):
+
+        success, message = AuthService.register(user)
+
+        if not success:
+
+            return ApiResponse.error(
+
+                message,
+
+                status.HTTP_409_CONFLICT
+
+            )
+
+        return ApiResponse.success(
+
             message,
+
             status_code=status.HTTP_201_CREATED
+
         )
