@@ -46,14 +46,8 @@ def register(user: UserRegister):
     return AuthController.register(user)
 
 @router.get("/me")
-def get_profile(
-    current_user=Depends(get_current_user)
-):
-
-    return {
-        "success": True,
-        "data": current_user
-    }
+def get_profile(current_user=Depends(get_current_user)):
+    return AuthController.me(current_user)
 
 @router.get("/patient/dashboard")
 def patient_dashboard(

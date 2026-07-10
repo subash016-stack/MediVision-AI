@@ -1,5 +1,5 @@
+from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
-
 
 class ApiResponse:
 
@@ -8,11 +8,11 @@ class ApiResponse:
 
         return JSONResponse(
             status_code=status_code,
-            content={
+            content=jsonable_encoder({
                 "success": True,
                 "message": message,
                 "data": data
-            }
+            })
         )
 
     @staticmethod
@@ -25,3 +25,4 @@ class ApiResponse:
                 "message": message
             }
         )
+

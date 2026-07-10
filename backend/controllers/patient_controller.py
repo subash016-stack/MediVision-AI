@@ -15,3 +15,10 @@ class PatientController:
             "Profile fetched successfully",
             user
         )
+    
+@staticmethod
+def me(current_user):
+    return ApiResponse.success(
+        "Profile fetched successfully",
+        current_user
+    )

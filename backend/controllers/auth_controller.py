@@ -45,3 +45,8 @@ class AuthController:
             status_code=status.HTTP_201_CREATED
 
         )
+    def me(current_user):
+        return ApiResponse.success(
+            "Profile fetched successfully",
+            current_user
+        )
