@@ -1,35 +1,15 @@
-from pydantic import BaseModel, EmailStr
-from datetime import datetime
+from pydantic import BaseModel, EmailStr, Field
+from typing import Literal
 
 
 class UserRegister(BaseModel):
-
-    full_name: str
-
+    full_name: str = Field(..., min_length=3, max_length=100)
     email: EmailStr
-
-    phone: str
-
-    password: str
-
-    role: str
+    phone: str = Field(..., min_length=10, max_length=15)
+    password: str = Field(..., min_length=8)
+    role: Literal["patient", "doctor"]
 
 
 class UserLogin(BaseModel):
-
     email: EmailStr
-
     password: str
-
-
-class UserResponse(BaseModel):
-
-    full_name: str
-
-    email: EmailStr
-
-    phone: str
-
-    role: str
-
-    created_at: datetime

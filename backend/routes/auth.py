@@ -1,6 +1,7 @@
 from fastapi import APIRouter
+
+from controllers.auth_controller import AuthController
 from schemas.user import UserRegister
-from services.auth_service import register_user
 
 router = APIRouter(
     prefix="/auth",
@@ -11,13 +12,10 @@ router = APIRouter(
 @router.get("/")
 def auth_home():
     return {
-        "message": "Authentication Route Working"
+        "message": "Authentication Module"
     }
 
 
 @router.post("/register")
 def register(user: UserRegister):
-
-    result = register_user(user)
-
-    return result
+    return AuthController.register(user)
