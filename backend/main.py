@@ -8,6 +8,9 @@ from fastapi.staticfiles import StaticFiles
 
 from routes.upload import router as upload_router
 
+from routes.prediction import router as prediction_router
+
+
 app = FastAPI(
 
     title="MediVision AI",
@@ -23,6 +26,8 @@ app.include_router(upload_router)
 app.include_router(auth_router)
 
 app.include_router(patient_router)
+
+app.include_router(prediction_router)
 
 app.mount(
     "/uploads",
