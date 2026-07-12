@@ -4,6 +4,10 @@ from routes.auth import router as auth_router
 
 from routes.patient import router as patient_router
 
+from fastapi.staticfiles import StaticFiles
+
+from routes.upload import router as upload_router
+
 app = FastAPI(
 
     title="MediVision AI",
@@ -13,9 +17,18 @@ app = FastAPI(
 )
 
 
+
+app.include_router(upload_router)
+
 app.include_router(auth_router)
 
 app.include_router(patient_router)
+
+app.mount(
+    "/uploads",
+    StaticFiles(directory="uploads"),
+    name="uploads"
+)
 
 
 @app.get("/")
