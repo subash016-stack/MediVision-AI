@@ -1,17 +1,16 @@
-import tensorflow as tf
-
 from ai.preprocessing import preprocess_image
 from ai.labels import CLASS_NAMES
+from ai.model_loader import MODEL
 
-MODEL = tf.keras.models.load_model(
-    "ai/models/chest_xray_model.keras"
-)
 
 def predict(image_path):
 
     image = preprocess_image(image_path)
 
-    prediction = MODEL.predict(image, verbose=0)
+    prediction = MODEL.predict(
+        image,
+        verbose=0
+    )
 
     predicted_index = prediction.argmax()
 

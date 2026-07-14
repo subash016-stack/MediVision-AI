@@ -44,6 +44,8 @@ class PredictionService:
 
             "confidence": result["confidence"],
 
+
+
             "created_at": datetime.now()
 
         }
@@ -63,9 +65,17 @@ class PredictionService:
         
         return {
     "prediction_id": prediction_id,
+
     "image_id": image_id,
+
     "user_id": current_user["user_id"],
+
     "disease": result["disease"],
+
     "confidence": result["confidence"],
+
+  
+
     "created_at": prediction_document["created_at"]
 }
+
