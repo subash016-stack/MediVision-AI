@@ -1,24 +1,26 @@
+from ai.model_loader import get_model
 from ai.preprocessing import preprocess_image
 from ai.labels import CLASS_NAMES
-from ai.model_loader import MODEL
 
 
 def predict(image_path):
 
+    model = get_model()
+
     image = preprocess_image(image_path)
 
-    prediction = MODEL.predict(
+    prediction = model.predict(
         image,
         verbose=0
     )
 
-    predicted_index = prediction.argmax()
+    index = prediction.argmax()
 
     confidence = float(prediction.max())
 
     return {
 
-        "disease": CLASS_NAMES[predicted_index],
+        "disease": CLASS_NAMES[index],
 
         "confidence": round(confidence * 100, 2)
 
