@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+
+# Virtual environments
+venv/
+**/venv/
+
+# Dataset
+training/dataset/
+
+# Models
+training/models/
+trained_models/
+*.keras
+*.h5
+
+# TensorBoard
+training/logs/
+
+# Uploads
+backend/uploads/
+
+# Archives
+*.zip
+
+# OS
+.DS_Store
+Thumbs.db
