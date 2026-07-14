@@ -27,3 +27,25 @@ backend/uploads/
 # OS
 .DS_Store
 Thumbs.db
+
+# AI Models
+*.keras
+*.h5
+
+# Training Outputs
+training/models/
+training/logs/
+
+# Dataset
+training/dataset/
+
+# Virtual Environments
+venv/
+**/venv/
+
+# Python
+__pycache__/
+*.pyc
+
+# Zip Files
+*.zip
