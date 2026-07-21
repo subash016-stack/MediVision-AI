@@ -77,5 +77,54 @@ class PredictionService:
   
 
     "created_at": prediction_document["created_at"]
-}
+    }
+    @staticmethod
+    def get_prediction_history(current_user):
 
+        history = list(
+            predictions.find(
+                {
+                    "user_id": current_user["user_id"]
+                },
+                {
+                    "_id": 0
+                }
+            ).sort("created_at", -1)
+        )
+
+        for item in history:
+
+            image = images.find_one(
+                {
+                    "image_id": item["image_id"]
+                },
+                {
+                    "_id": 0,
+                    "filepath": 1
+                }
+            )
+
+            if image:
+                item["image_url"] = image["filepath"]
+
+        return history
+    @staticmethod
+    def delete_prediction(prediction_id, current_user):
+
+        prediction = predictions.find_one(
+            {
+                "prediction_id": prediction_id,
+                "user_id": current_user["user_id"]
+            }
+        )
+
+        if prediction is None:
+            raise ValueError("Prediction not found.")
+
+        predictions.delete_one(
+            {
+                "prediction_id": prediction_id
+            }
+        )
+
+        return True

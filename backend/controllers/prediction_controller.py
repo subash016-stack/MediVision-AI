@@ -63,3 +63,42 @@ class PredictionController:
         except Exception as e:
 
             return ApiResponse.error(str(e))
+    @staticmethod
+    def history(current_user):
+
+        try:
+
+            result = PredictionService.get_prediction_history(
+                current_user
+            )
+
+            return ApiResponse.success(
+                "Prediction history fetched successfully",
+                result
+            )
+
+        except Exception as e:
+
+            return ApiResponse.error(str(e))
+
+
+    @staticmethod
+    def delete_prediction(
+        prediction_id,
+        current_user
+    ):
+
+        try:
+
+            PredictionService.delete_prediction(
+                prediction_id,
+                current_user
+            )
+
+            return ApiResponse.success(
+                "Prediction deleted successfully"
+            )
+
+        except Exception as e:
+
+            return ApiResponse.error(str(e))
