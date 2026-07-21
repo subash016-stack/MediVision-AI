@@ -15,7 +15,8 @@ function Login() {
     const handleLogin = async () => {
 
     try {
-
+        console.log("Email:", JSON.stringify(email));
+        console.log("Password:", JSON.stringify(password));
         const response = await loginAPI({
             email,
             password

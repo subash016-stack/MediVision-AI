@@ -329,3 +329,50 @@ button{
     font-size:30px;
     font-weight:bold;
 }
+.search-box {
+    width: 300px;
+    padding: 10px;
+    margin: 20px 0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+.history-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+}
+
+.history-table th {
+    background: #2563eb;
+    color: white;
+    padding: 14px;
+}
+
+.history-table td {
+    padding: 14px;
+    border-bottom: 1px solid #eee;
+}
+
+.history-image {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.delete-btn {
+    background: #dc2626;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.delete-btn:hover {
+    background: #b91c1c;
+}
