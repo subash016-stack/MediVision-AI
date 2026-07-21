@@ -20,7 +20,6 @@ def predict(
     )
 
 
-# NEW
 @router.get("/history")
 def history(
     current_user=Depends(require_patient)
@@ -30,7 +29,6 @@ def history(
     )
 
 
-# NEW
 @router.delete("/{prediction_id}")
 def delete_prediction(
     prediction_id: str,
