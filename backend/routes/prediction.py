@@ -14,8 +14,29 @@ def predict(
     image_id: str,
     current_user=Depends(require_patient)
 ):
-
     return PredictionController.predict(
         image_id,
+        current_user
+    )
+
+
+# NEW
+@router.get("/history")
+def history(
+    current_user=Depends(require_patient)
+):
+    return PredictionController.history(
+        current_user
+    )
+
+
+# NEW
+@router.delete("/{prediction_id}")
+def delete_prediction(
+    prediction_id: str,
+    current_user=Depends(require_patient)
+):
+    return PredictionController.delete_prediction(
+        prediction_id,
         current_user
     )
