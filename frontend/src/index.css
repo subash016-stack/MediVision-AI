@@ -433,3 +433,161 @@ button{
 .info-row span{
     color:#555;
 }
+/* Profile Container */
+
+.profile-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+}
+
+/* Profile Card */
+
+.profile-card {
+    width: 100%;
+    max-width: 550px;
+    background: #ffffff;
+    border-radius: 15px;
+    padding: 35px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Avatar */
+
+.profile-avatar {
+    width: 90px;
+    height: 90px;
+    background: #2563eb;
+    color: white;
+    border-radius: 50%;
+    font-size: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 20px;
+}
+
+/* Editable Name */
+
+.profile-name {
+    width: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+    color: #222;
+    margin-bottom: 8px;
+}
+
+/* Role */
+
+.profile-card p {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 25px;
+    letter-spacing: 1px;
+}
+
+/* Profile Info */
+
+.profile-info {
+    margin-top: 20px;
+}
+
+/* Info Row */
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid #eeeeee;
+}
+
+.info-row:last-child {
+    border-bottom: none;
+}
+
+.info-row strong {
+    color: #333;
+    font-size: 15px;
+}
+
+.info-row span {
+    color: #555;
+    font-size: 15px;
+}
+
+/* Inputs */
+
+.profile-input {
+    padding: 8px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 15px;
+    transition: all 0.3s ease;
+}
+
+.profile-input:focus {
+    border-color: #2563eb;
+    outline: none;
+    box-shadow: 0 0 5px rgba(37, 99, 235, 0.3);
+}
+
+/* Phone Input */
+
+.info-row input {
+    width: 220px;
+}
+
+/* Save Button */
+
+.save-btn {
+    width: 100%;
+    margin-top: 30px;
+    padding: 12px;
+    background: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.save-btn:hover {
+    background: #1d4ed8;
+}
+
+.save-btn:disabled {
+    background: #93c5fd;
+    cursor: not-allowed;
+}
+
+/* Responsive */
+
+@media (max-width: 600px) {
+
+    .profile-card {
+        padding: 25px;
+    }
+
+    .info-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .info-row input {
+        width: 100%;
+    }
+
+    .profile-name {
+        font-size: 24px;
+    }
+}

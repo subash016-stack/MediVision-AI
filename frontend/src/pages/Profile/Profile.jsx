@@ -1,29 +1,41 @@
 import { useEffect, useState } from "react";
 import DashboardLayout from "../../layouts/DashboardLayout";
-import { getProfile } from "../../services/profileService";
+import {
+    getProfile,
+    updateProfile
+} from "../../services/profileService";
 
 function Profile() {
 
     const [profile, setProfile] = useState(null);
     const [loading, setLoading] = useState(true);
 
+    const [fullName, setFullName] = useState("");
+    const [phone, setPhone] = useState("");
+    const [saving, setSaving] = useState(false);
+
     useEffect(() => {
-
         loadProfile();
-
     }, []);
 
     const loadProfile = async () => {
 
         try {
 
+            setLoading(true);
+
             const response = await getProfile();
 
             setProfile(response.data);
 
+            setFullName(response.data.full_name);
+            setPhone(response.data.phone);
+
         } catch (error) {
 
             console.error(error);
+
+            alert("Failed to load profile.");
 
         } finally {
 
@@ -33,16 +45,41 @@ function Profile() {
 
     };
 
+    const handleSave = async () => {
+
+        try {
+
+            setSaving(true);
+
+            await updateProfile({
+                full_name: fullName,
+                phone: phone
+            });
+
+            alert("Profile updated successfully!");
+
+            await loadProfile();
+
+        } catch (error) {
+
+            console.error(error);
+
+            alert("Failed to update profile.");
+
+        } finally {
+
+            setSaving(false);
+
+        }
+
+    };
+
     if (loading) {
 
         return (
-
             <DashboardLayout>
-
                 <h2>Loading Profile...</h2>
-
             </DashboardLayout>
-
         );
 
     }
@@ -56,12 +93,15 @@ function Profile() {
                 <div className="profile-card">
 
                     <div className="profile-avatar">
-
                         👤
-
                     </div>
 
-                    <h2>{profile.full_name}</h2>
+                    <input
+                        className="profile-input profile-name"
+                        type="text"
+                        value={fullName}
+                        onChange={(e) => setFullName(e.target.value)}
+                    />
 
                     <p>{profile.role.toUpperCase()}</p>
 
@@ -79,7 +119,13 @@ function Profile() {
 
                         <div className="info-row">
                             <strong>Phone</strong>
-                            <span>{profile.phone}</span>
+
+                            <input
+                                className="profile-input"
+                                type="text"
+                                value={phone}
+                                onChange={(e) => setPhone(e.target.value)}
+                            />
                         </div>
 
                         <div className="info-row">
@@ -90,6 +136,14 @@ function Profile() {
                         </div>
 
                     </div>
+
+                    <button
+                        className="save-btn"
+                        onClick={handleSave}
+                        disabled={saving}
+                    >
+                        {saving ? "Saving..." : "Save Changes"}
+                    </button>
 
                 </div>
 
