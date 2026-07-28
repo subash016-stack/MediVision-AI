@@ -7,7 +7,7 @@ from routes.patient import router as patient_router
 from routes.upload import router as upload_router
 from routes.prediction import router as prediction_router
 from routes.dashboard import router as dashboard_router
-
+from routes import profile
 app = FastAPI(
     title="MediVision AI",
     version="1.0.0"
@@ -32,8 +32,7 @@ app.include_router(upload_router)
 app.include_router(auth_router)
 app.include_router(patient_router)
 app.include_router(prediction_router)
-
-
+app.include_router(profile.router)
 app.include_router(dashboard_router)
 # ---------------- Static Files ----------------
 
