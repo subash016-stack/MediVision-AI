@@ -376,3 +376,60 @@ button{
 .delete-btn:hover {
     background: #b91c1c;
 }
+.profile-container{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:40px;
+}
+
+.profile-card{
+    width:500px;
+    background:#ffffff;
+    border-radius:15px;
+    padding:30px;
+    box-shadow:0 5px 20px rgba(0,0,0,.08);
+}
+
+.profile-avatar{
+    width:100px;
+    height:100px;
+    margin:auto;
+    border-radius:50%;
+    background:#2563EB;
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:48px;
+}
+
+.profile-card h2{
+    text-align:center;
+    margin-top:20px;
+}
+
+.profile-card p{
+    text-align:center;
+    color:#666;
+    margin-bottom:25px;
+}
+
+.profile-info{
+    margin-top:20px;
+}
+
+.info-row{
+    display:flex;
+    justify-content:space-between;
+    padding:14px 0;
+    border-bottom:1px solid #eee;
+}
+
+.info-row strong{
+    color:#333;
+}
+
+.info-row span{
+    color:#555;
+}
