@@ -10,13 +10,15 @@ class ReviewService:
     def get_pending_predictions():
 
         prediction_list = list(
-            predictions.find(
-                {},
-                {
-                    "_id": 0
-                }
-            ).sort("created_at", -1)
-        )
+        predictions.find(
+            {
+                "doctor_status": "Pending"
+            },
+            {
+                "_id": 0
+            }
+        ).sort("created_at", -1)
+    )
 
         for prediction in prediction_list:
 
