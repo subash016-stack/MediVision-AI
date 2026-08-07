@@ -1,16 +1,15 @@
-import DashboardLayout from "../../layouts/DashboardLayout";
-
+import DoctorLayout from "../../layouts/DoctorLayout";
 function DoctorDashboard() {
 
     return (
 
-        <DashboardLayout>
+        <DoctorLayout>
 
             <h1>Doctor Dashboard</h1>
 
             <p>Welcome Doctor!</p>
 
-        </DashboardLayout>
+        </DoctorLayout>
 
     );
 

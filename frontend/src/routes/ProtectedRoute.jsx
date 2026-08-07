@@ -1,19 +1,40 @@
-import { Navigate } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 
-function ProtectedRoute({children}){
+function ProtectedRoute({ children }) {
 
-const token=localStorage.getItem(
+    const token = localStorage.getItem("token");
+    const role = localStorage.getItem("role");
 
-"token"
+    const location = useLocation();
 
-);
+    // User is not logged in
+    if (!token) {
+        return <Navigate to="/" replace />;
+    }
 
-return token?
+    // Doctor-only routes
+    if (
+        location.pathname.startsWith("/doctor") &&
+        role !== "doctor"
+    ) {
+        return <Navigate to="/dashboard" replace />;
+    }
 
-children
+    // Patient-only routes
+    if (
+        (
+            location.pathname.startsWith("/dashboard") ||
+            location.pathname.startsWith("/upload") ||
+            location.pathname.startsWith("/history") ||
+            location.pathname.startsWith("/profile") ||
+            location.pathname.startsWith("/change-password")
+        ) &&
+        role !== "patient"
+    ) {
+        return <Navigate to="/doctor/dashboard" replace />;
+    }
 
-:<Navigate to="/"/>;
-
+    return children;
 }
 
 export default ProtectedRoute;
