@@ -136,7 +136,12 @@ function Profile() {
                         </div>
 
                     </div>
-
+                    <button
+                        className="save-btn"
+                        onClick={() => window.location.href = "/change-password"}
+                    >
+                        Change Password
+                    </button>
                     <button
                         className="save-btn"
                         onClick={handleSave}

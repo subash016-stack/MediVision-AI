@@ -19,6 +19,11 @@ function AuthProvider({children}){
         JSON.stringify(userData)
     );
 
+    localStorage.setItem(
+        "role",
+        userData.role
+    );
+
     setToken(jwt);
 
     setUser(userData);
@@ -30,6 +35,8 @@ function AuthProvider({children}){
     localStorage.removeItem("token");
 
     localStorage.removeItem("user");
+
+    localStorage.removeItem("role");
 
     setToken(null);
 

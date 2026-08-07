@@ -33,7 +33,15 @@ function Login() {
             localStorage.getItem("token")
         );
 
+        if (response.data.user.role === "doctor") {
+
+        navigate("/doctor/dashboard");
+
+    } else {
+
         navigate("/dashboard");
+
+    }
 
     } catch (error) {
 

@@ -6,9 +6,9 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 import Upload from "./pages/Upload/Upload";
 import History from "./pages/History/History";
 import Profile from "./pages/Profile/Profile";
-
+import ChangePassword from "./pages/Profile/ChangePassword";
 import ProtectedRoute from "./routes/ProtectedRoute";
-
+import DoctorDashboard from "./pages/Doctor/DoctorDashboard";
 function App() {
     return (
         <Routes>
@@ -62,7 +62,20 @@ function App() {
                     </ProtectedRoute>
                 }
             />
+            <Route
+            path="/change-password"
+            element={<ChangePassword />}
+            />
 
+            <Route
+                path="/doctor/dashboard"
+                element={
+                    <ProtectedRoute>
+                        <DoctorDashboard />
+                    </ProtectedRoute>
+                }
+            />
+            
         </Routes>
     );
 }
