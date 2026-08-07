@@ -1,5 +1,5 @@
 from database.connection import get_collection
-
+from datetime import datetime
 predictions = get_collection("predictions")
 users = get_collection("users")
 
@@ -40,3 +40,41 @@ class ReviewService:
                 prediction["patient_email"] = patient["email"]
 
         return prediction_list
+    @staticmethod
+    def mark_reviewed(  
+        prediction_id,
+        review_data,
+        current_user
+    ):
+
+        prediction = predictions.find_one(
+            {
+                "prediction_id": prediction_id
+            }
+        )
+
+        if prediction is None:
+            raise ValueError("Prediction not found.")
+
+        predictions.update_one(
+            {
+                "prediction_id": prediction_id
+            },
+            {
+                "$set": {
+
+                    "doctor_status": "Reviewed",
+
+                    "doctor_comments":
+                        review_data.doctor_comments,
+
+                    "reviewed_by":
+                        current_user["user_id"],
+
+                    "reviewed_at":
+                        datetime.now()
+
+                }
+            }
+        )
+        return True
