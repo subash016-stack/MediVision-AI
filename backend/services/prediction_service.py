@@ -34,22 +34,30 @@ class PredictionService:
 
         prediction_document = {
 
-            "prediction_id": prediction_id,
+    "prediction_id": prediction_id,
 
-            "image_id": image_id,
+    "image_id": image_id,
 
-            "user_id": current_user["user_id"],
+    "user_id": current_user["user_id"],
 
-            "disease": result["disease"],
+    "disease": result["disease"],
 
-            "confidence": result["confidence"],
+    "confidence": result["confidence"],
 
+    # Doctor Review Fields
+    "doctor_status": "Pending",
 
+    "doctor_comments": "",
 
-            "created_at": datetime.now()
+    "reviewed_by": None,
 
-        }
+    "reviewed_at": None,
 
+    "created_at": datetime.now()
+
+}
+        print("Prediction Document:")
+        print(prediction_document)
         predictions.insert_one(prediction_document)
 
         images.update_one(

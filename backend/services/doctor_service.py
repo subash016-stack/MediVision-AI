@@ -7,8 +7,7 @@ predictions = get_collection("predictions")
 class DoctorService:
 
     @staticmethod
-    def dashboard_stats():
-
+    def dashboard(current_user):
         total_patients = users.count_documents({
             "role": "patient"
         })
@@ -25,12 +24,24 @@ class DoctorService:
 
         return {
 
-            "total_patients": total_patients,
+            "doctor": {
 
-            "total_predictions": total_predictions,
+                "user_id": current_user["user_id"],
+                "full_name": current_user["full_name"],
+                "email": current_user["email"]
 
-            "pending_reviews": pending_reviews,
+            },
 
-            "completed_reviews": completed_reviews
+            "stats": {
+
+                "total_patients": total_patients,
+
+                "total_predictions": total_predictions,
+
+                "pending_reviews": pending_reviews,
+
+                "completed_reviews": completed_reviews
+
+            }
 
         }
