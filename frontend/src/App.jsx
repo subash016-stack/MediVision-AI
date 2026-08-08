@@ -2,18 +2,29 @@ import { Routes, Route } from "react-router-dom";
 
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
+
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Upload from "./pages/Upload/Upload";
 import History from "./pages/History/History";
 import Profile from "./pages/Profile/Profile";
 import ChangePassword from "./pages/Profile/ChangePassword";
-import ProtectedRoute from "./routes/ProtectedRoute";
+
 import DoctorDashboard from "./pages/Doctor/DoctorDashboard";
+import ReviewQueue from "./pages/Doctor/ReviewQueue";
+import ReviewDetails from "./pages/Doctor/ReviewDetails";
+
+import ProtectedRoute from "./routes/ProtectedRoute";
+
+
 function App() {
+
     return (
+
         <Routes>
 
-            {/* Public Routes */}
+            {/* =========================
+                PUBLIC ROUTES
+            ========================== */}
 
             <Route
                 path="/"
@@ -25,7 +36,10 @@ function App() {
                 element={<Register />}
             />
 
-            {/* Protected Routes */}
+
+            {/* =========================
+                PATIENT ROUTES
+            ========================== */}
 
             <Route
                 path="/dashboard"
@@ -62,10 +76,20 @@ function App() {
                     </ProtectedRoute>
                 }
             />
+
             <Route
-            path="/change-password"
-            element={<ChangePassword />}
+                path="/change-password"
+                element={
+                    <ProtectedRoute>
+                        <ChangePassword />
+                    </ProtectedRoute>
+                }
             />
+
+
+            {/* =========================
+                DOCTOR ROUTES
+            ========================== */}
 
             <Route
                 path="/doctor/dashboard"
@@ -75,9 +99,29 @@ function App() {
                     </ProtectedRoute>
                 }
             />
-            
+
+            <Route
+                path="/doctor/reviews"
+                element={
+                    <ProtectedRoute>
+                        <ReviewQueue />
+                    </ProtectedRoute>
+                }
+            />
+
+            <Route
+                path="/doctor/reviews/:predictionId"
+                element={
+                    <ProtectedRoute>
+                        <ReviewDetails />
+                    </ProtectedRoute>
+                }
+            />
+
         </Routes>
+
     );
+
 }
 
 export default App;

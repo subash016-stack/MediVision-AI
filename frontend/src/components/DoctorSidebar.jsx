@@ -9,6 +9,7 @@ function DoctorSidebar() {
             <Link to="/doctor/patients">Patients</Link>
             <Link to="/doctor/reviews">AI Reviews</Link>
             <Link to="/profile">Profile</Link>
+            <Link to="/doctor/reviews">Pending Reviews</Link>
         </aside>
     );
 }
