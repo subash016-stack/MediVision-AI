@@ -9,11 +9,12 @@ import History from "./pages/History/History";
 import Profile from "./pages/Profile/Profile";
 import ChangePassword from "./pages/Profile/ChangePassword";
 
+import ProtectedRoute from "./routes/ProtectedRoute";
+
 import DoctorDashboard from "./pages/Doctor/DoctorDashboard";
 import ReviewQueue from "./pages/Doctor/ReviewQueue";
-import ReviewDetails from "./pages/Doctor/ReviewDetails";
-
-import ProtectedRoute from "./routes/ProtectedRoute";
+import PredictionReview from "./pages/Doctor/PredictionReview";
+import MedicalReport from "./pages/Report/MedicalReport";
 
 
 function App() {
@@ -22,9 +23,9 @@ function App() {
 
         <Routes>
 
-            {/* =========================
-                PUBLIC ROUTES
-            ========================== */}
+            {/* ========================= */}
+            {/* PUBLIC ROUTES */}
+            {/* ========================= */}
 
             <Route
                 path="/"
@@ -37,9 +38,9 @@ function App() {
             />
 
 
-            {/* =========================
-                PATIENT ROUTES
-            ========================== */}
+            {/* ========================= */}
+            {/* PATIENT ROUTES */}
+            {/* ========================= */}
 
             <Route
                 path="/dashboard"
@@ -87,9 +88,9 @@ function App() {
             />
 
 
-            {/* =========================
-                DOCTOR ROUTES
-            ========================== */}
+            {/* ========================= */}
+            {/* DOCTOR ROUTES */}
+            {/* ========================= */}
 
             <Route
                 path="/doctor/dashboard"
@@ -109,11 +110,22 @@ function App() {
                 }
             />
 
+            {/* Prediction Review */}
             <Route
                 path="/doctor/reviews/:predictionId"
                 element={
                     <ProtectedRoute>
-                        <ReviewDetails />
+                        <PredictionReview />
+                    </ProtectedRoute>
+                }
+            />
+
+            {/* Medical Report (Patient & Doctor) */}
+            <Route
+                path="/report/:predictionId"
+                element={
+                    <ProtectedRoute>
+                        <MedicalReport />
                     </ProtectedRoute>
                 }
             />
@@ -123,5 +135,6 @@ function App() {
     );
 
 }
+
 
 export default App;

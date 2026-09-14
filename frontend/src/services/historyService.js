@@ -19,3 +19,14 @@ export const deletePrediction = async (predictionId) => {
     return response.data;
 
 };
+
+// Get single prediction details
+export const getPredictionDetails = async (predictionId) => {
+
+    const response = await api.get(
+        `/prediction/details/${predictionId}`
+    );
+
+    return response.data;
+
+};

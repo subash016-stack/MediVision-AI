@@ -64,7 +64,10 @@ function Profile() {
 
             console.error(error);
 
-            alert("Failed to update profile.");
+            alert(
+                error.response?.data?.message ||
+                "Failed to update profile."
+            );
 
         } finally {
 

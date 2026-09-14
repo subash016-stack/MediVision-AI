@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import DashboardLayout from "../../layouts/DashboardLayout";
 import {
     getPredictionHistory,
@@ -7,6 +8,7 @@ import {
 
 function History() {
 
+    const navigate = useNavigate();
     const [history, setHistory] = useState([]);
     const [filteredHistory, setFilteredHistory] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -18,8 +20,8 @@ function History() {
 
             const response = await getPredictionHistory();
 
-            setHistory(response.data);
-            setFilteredHistory(response.data);
+            setHistory(response.data || []);
+            setFilteredHistory(response.data || []);
 
         } catch (error) {
 
@@ -42,7 +44,8 @@ function History() {
     useEffect(() => {
 
         const filtered = history.filter(item =>
-            item.disease.toLowerCase().includes(search.toLowerCase())
+            item.disease.toLowerCase().includes(search.toLowerCase()) ||
+            (item.doctor_status && item.doctor_status.toLowerCase().includes(search.toLowerCase()))
         );
 
         setFilteredHistory(filtered);
@@ -79,7 +82,7 @@ function History() {
 
             <input
                 type="text"
-                placeholder="Search Disease..."
+                placeholder="Search Disease or Status..."
                 value={search}
                 onChange={(e) =>
                     setSearch(e.target.value)
@@ -106,6 +109,7 @@ function History() {
                             <th>Image</th>
                             <th>Disease</th>
                             <th>Confidence</th>
+                            <th>Doctor Status</th>
                             <th>Date</th>
                             <th>Action</th>
 
@@ -129,28 +133,46 @@ function History() {
 
                                 </td>
 
-                                <td>{item.disease}</td>
+                                <td>
+                                    <strong>{item.disease}</strong>
+                                </td>
 
                                 <td>{item.confidence}%</td>
 
                                 <td>
+                                    <span className={`status-badge ${item.doctor_status === 'Reviewed' ? 'status-reviewed' : 'status-pending'}`}>
+                                        {item.doctor_status || "Pending"}
+                                    </span>
+                                </td>
+
+                                <td>
                                     {new Date(
                                         item.created_at
-                                    ).toLocaleString()}
+                                    ).toLocaleDateString()}
                                 </td>
 
                                 <td>
 
-                                    <button
-                                        className="delete-btn"
-                                        onClick={() =>
-                                            handleDelete(
-                                                item.prediction_id
-                                            )
-                                        }
-                                    >
-                                        Delete
-                                    </button>
+                                    <div style={{ display: "flex", gap: "8px", justifyContent: "center" }}>
+                                        <button
+                                            className="review-button"
+                                            style={{ padding: "6px 12px", fontSize: "0.85rem" }}
+                                            onClick={() => navigate(`/report/${item.prediction_id}`)}
+                                        >
+                                            View Report
+                                        </button>
+
+                                        <button
+                                            className="delete-btn"
+                                            onClick={() =>
+                                                handleDelete(
+                                                    item.prediction_id
+                                                )
+                                            }
+                                        >
+                                            Delete
+                                        </button>
+                                    </div>
 
                                 </td>
 

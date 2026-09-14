@@ -71,6 +71,9 @@ class ReviewService:
                     "reviewed_by":
                         current_user["user_id"],
 
+                    "doctor_name":
+                        current_user.get("full_name", "Medical Specialist"),
+
                     "reviewed_at":
                         datetime.now()
 

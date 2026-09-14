@@ -37,8 +37,8 @@ class ProfileService:
             }
         )
 
-        if result.modified_count == 0:
-            raise ValueError("No changes were made.")
+        if result.matched_count == 0:
+            raise ValueError("User not found.")
 
         return True
     @staticmethod

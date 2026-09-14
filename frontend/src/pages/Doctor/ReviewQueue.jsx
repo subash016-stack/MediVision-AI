@@ -3,9 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import DashboardLayout from "../../layouts/DashboardLayout";
 
-import {
-    getPendingReviews
-} from "../../services/reviewService";
+import { getPendingReviews } from "../../services/reviewService";
 
 
 function ReviewQueue() {
@@ -15,6 +13,8 @@ function ReviewQueue() {
     const [reviews, setReviews] = useState([]);
 
     const [loading, setLoading] = useState(true);
+
+    const [error, setError] = useState("");
 
 
     useEffect(() => {
@@ -28,15 +28,22 @@ function ReviewQueue() {
 
         try {
 
-            const response = await getPendingReviews();
+            setLoading(true);
+
+            setError("");
+
+            const response =
+                await getPendingReviews();
 
             setReviews(response.data || []);
 
         } catch (error) {
 
-            console.error(
-                "Error loading pending reviews:",
-                error
+            console.error(error);
+
+            setError(
+                error.response?.data?.detail ||
+                "Failed to load pending reviews."
             );
 
         } finally {
@@ -75,27 +82,23 @@ function ReviewQueue() {
 
             <div className="review-queue-page">
 
-                {/* =========================
-                    PAGE HEADER
-                ========================== */}
+
+                {/* Header */}
 
                 <div className="review-queue-header">
 
-                    <div className="review-title-section">
+                    <div>
 
                         <h1>
                             Pending Reviews
                         </h1>
 
                         <p>
-                            Review AI predictions submitted
-                            by patients.
+                            Review AI predictions submitted by patients.
                         </p>
 
                     </div>
 
-
-                    {/* Pending Count */}
 
                     <div className="pending-count">
 
@@ -112,9 +115,20 @@ function ReviewQueue() {
                 </div>
 
 
-                {/* =========================
-                    NO REVIEWS
-                ========================== */}
+                {/* Error */}
+
+                {error && (
+
+                    <div className="review-error-message">
+
+                        {error}
+
+                    </div>
+
+                )}
+
+
+                {/* No Reviews */}
 
                 {reviews.length === 0 ? (
 
@@ -125,18 +139,13 @@ function ReviewQueue() {
                         </h2>
 
                         <p>
-                            There are currently no
-                            predictions waiting for review.
+                            There are currently no predictions
+                            waiting for review.
                         </p>
 
                     </div>
 
                 ) : (
-
-
-                    /* =========================
-                       REVIEWS TABLE
-                    ========================== */
 
                     <div className="reviews-table-container">
 
@@ -173,30 +182,22 @@ function ReviewQueue() {
 
                             <tbody>
 
-                                {reviews.map((item) => (
+                                {reviews.map((review) => (
 
                                     <tr
-                                        key={
-                                            item.prediction_id
-                                        }
+                                        key={review.prediction_id}
                                     >
-
-                                        {/* Patient */}
 
                                         <td>
 
                                             <div className="patient-cell">
 
                                                 <strong>
-                                                    {
-                                                        item.patient_name
-                                                    }
+                                                    {review.patient_name}
                                                 </strong>
 
                                                 <span>
-                                                    {
-                                                        item.patient_email
-                                                    }
+                                                    {review.patient_email}
                                                 </span>
 
                                             </div>
@@ -204,46 +205,35 @@ function ReviewQueue() {
                                         </td>
 
 
-                                        {/* Disease */}
-
                                         <td>
 
                                             <strong>
-                                                {
-                                                    item.disease
-                                                }
+                                                {review.disease}
                                             </strong>
 
                                         </td>
 
 
-                                        {/* Confidence */}
-
                                         <td>
 
                                             <strong>
-                                                {
-                                                    item.confidence
-                                                }%
+                                                {review.confidence}%
                                             </strong>
 
                                         </td>
 
 
-                                        {/* Status */}
-
                                         <td>
 
-                                            <span className="status-pending">
+                                            <span className="status-badge">
 
-                                                Pending
+                                                {review.doctor_status ||
+                                                    "Pending"}
 
                                             </span>
 
                                         </td>
 
-
-                                        {/* Action */}
 
                                         <td>
 
@@ -251,7 +241,7 @@ function ReviewQueue() {
                                                 className="review-button"
                                                 onClick={() =>
                                                     navigate(
-                                                        `/doctor/reviews/${item.prediction_id}`
+                                                        `/doctor/reviews/${review.prediction_id}`
                                                     )
                                                 }
                                             >

@@ -39,11 +39,21 @@ app.include_router(dashboard_router)
 app.include_router(doctor_router)
 app.include_router(review_router)
 # ---------------- Static Files ----------------
+import os
+
+os.makedirs("uploads", exist_ok=True)
+os.makedirs("heatmaps", exist_ok=True)
 
 app.mount(
     "/uploads",
     StaticFiles(directory="uploads"),
     name="uploads"
+)
+
+app.mount(
+    "/heatmaps",
+    StaticFiles(directory="heatmaps"),
+    name="heatmaps"
 )
 
 @app.get("/")
