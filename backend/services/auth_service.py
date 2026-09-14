@@ -60,6 +60,7 @@ class AuthService:
 
         }
     
+    @staticmethod
     def register(user):
 
         existing = users.find_one(

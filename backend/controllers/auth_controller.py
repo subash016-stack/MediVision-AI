@@ -24,29 +24,30 @@ class AuthController:
             result
         )
         
+    @staticmethod
     def register(user):
+        try:
+            success, message = AuthService.register(user)
 
-        success, message = AuthService.register(user)
+            if not success:
+                return ApiResponse.error(
+                    message,
+                    status.HTTP_409_CONFLICT
+                )
 
-        if not success:
-
-            return ApiResponse.error(
-
+            return ApiResponse.success(
                 message,
-
-                status.HTTP_409_CONFLICT
-
+                status_code=status.HTTP_201_CREATED
             )
+        except Exception as e:
+            return ApiResponse.error(str(e), 500)
 
-        return ApiResponse.success(
-
-            message,
-
-            status_code=status.HTTP_201_CREATED
-
-        )
+    @staticmethod
     def me(current_user):
-        return ApiResponse.success(
-            "Profile fetched successfully",
-            current_user
-        )
+        try:
+            return ApiResponse.success(
+                "Profile fetched successfully",
+                current_user
+            )
+        except Exception as e:
+            return ApiResponse.error(str(e), 500)
