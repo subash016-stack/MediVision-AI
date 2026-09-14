@@ -62,5 +62,6 @@ app.mount(
 @app.get("/")
 def home():
     return {
-        "message": "Welcome to MediVision AI Backend"
+        "message": "Welcome to MediVision AI Backend",
+        "status": "online"
     }
