@@ -30,31 +30,31 @@ def generate_gradcam(model, image_path, output_path, class_index=None):
         
         img_array = preprocess_image(image_path)
         
-        # Determine last conv layer
-        target_model, last_conv_layer_name = find_last_conv_layer(model)
-        
-        if target_model is None or last_conv_layer_name is None:
-            # Fallback: find any layer with 4D output
-            for l in reversed(model.layers):
-                if 'conv' in l.name.lower():
-                    last_conv_layer_name = l.name
-                    target_model = model
-                    break
+        # Check for nested efficientnet base model
+        eff_base = None
+        for layer in model.layers:
+            if 'efficientnet' in layer.name.lower():
+                eff_base = layer
+                break
 
-        if target_model and last_conv_layer_name:
-            last_conv_layer = target_model.get_layer(last_conv_layer_name)
-            
-            # Build grad model
-            grad_model = tf.keras.models.Model(
-                inputs=model.inputs,
-                outputs=[last_conv_layer.output, model.output]
+        if eff_base is not None:
+            last_conv = eff_base.get_layer('top_conv')
+            sub_grad_model = tf.keras.Model(
+                inputs=eff_base.inputs,
+                outputs=[last_conv.output, eff_base.output]
             )
 
+            x_prep = tf.keras.applications.efficientnet.preprocess_input(img_array)
+
             with tf.GradientTape() as tape:
-                conv_outputs, predictions = grad_model(img_array)
+                conv_outputs, base_output = sub_grad_model(x_prep)
+                tape.watch(conv_outputs)
+                gap = model.get_layer('global_average_pooling2d')(base_output)
+                drop = model.get_layer('dropout')(gap, training=False)
+                preds = model.get_layer('dense')(drop)
                 if class_index is None:
-                    class_index = tf.argmax(predictions[0])
-                loss = predictions[:, class_index]
+                    class_index = tf.argmax(preds[0])
+                loss = preds[:, class_index]
 
             grads = tape.gradient(loss, conv_outputs)
             pooled_grads = tf.reduce_mean(grads, axis=(0, 1, 2))
